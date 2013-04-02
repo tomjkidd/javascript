@@ -1,0 +1,93 @@
+* {
+	border: 0;
+	margin: 0;
+}
+
+*, *:after, *:before {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border-size: 5px;
+}
+
+.grid {
+	width: 100%;
+}
+.grid::after {
+    content: "";
+    display: table;
+	clear:both;
+}
+
+/* This makes it so that all elements that contain 'col-' will have styling applied */
+[class*='col-'] {
+	float: left;
+	line-height: 25px;
+}
+.col-1-1 {
+	width: 100%;
+}
+.col-1-2{
+	width: 50%;
+}
+.col-1-3 {
+	width: 33.33%
+}
+.col-2-3 {
+	width: 66.66%;
+}
+.col-1-5 {
+	width: 20%;
+}
+.col-4-5 {
+	width: 80%;
+}
+.centered {
+	text-align: center;
+}
+
+#header, #menu-grid  div, #main, #footer {
+	color: white;
+	background-color: #1E1E1E;
+	border: solid white;
+}
+
+#header, #footer {
+	color: #569CD6;
+	line-height: 100px
+}
+
+#header:hover, #footer:hover, #main:hover {
+	border: solid #608B3D;
+}
+
+#navigation {
+	veritcal-align: middle;
+}
+
+#menu-grid [class*='col']:hover {
+	border: solid #297EAF;
+}
+
+#main {
+	line-height: 200px;
+}
+
+#navigation {
+	width: 100%;
+	display: inline-block;
+	vertical-align: text-bottom;
+}
+
+#icon-container {
+	background-color: #742894;
+	border: solid white 3px;
+}
+
+#icon-container {
+	display: table-cell;
+}
+
+#icon-container, #the-icon, #menu {
+	vertical-align: middle;
+}
