@@ -1,0 +1,35 @@
+<html>
+	<head>
+	<style>
+		.help-button{
+			background-color: #1E1E1E;
+		}
+		.help-message{
+			color: #297EAF;
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		}
+	</style>
+	</head>
+	<body>
+		<!-- 
+			For my new smartphone's number, this is the widget value that I got. 
+			Looks like we will need to set up a Google Voice account with Josh.
+			Josh can then give us his number and we can embed this where it needs to go.
+			
+			How it works:
+			When you click on the icon, it gives Name and Number fields.
+			These are the fields for the current user.
+			Hitting connect then connects the user to the google voice voicemail box and leaves a message.
+			The message can be listened to, and transcribed at the liesure of the voicemail box owner.
+		-->
+		<div class="help-button">
+		<div class="help-message">
+		For help, leave a voicemail!
+		</div>
+		<object type="application/x-shockwave-flash" data="https://clients4.google.com/voice/embed/webCallButtonVm" width="230" height="85">
+		<param name="movie" value="https://clients4.google.com/voice/embed/webCallButtonVm" />
+		<param name="wmode" value="transparent" />
+		<param name="FlashVars" value="id=e22cefe291894def50e0a314c1a7dbf6bc0df346&style=0" /></object>
+		</div>
+	</body>
+</html>

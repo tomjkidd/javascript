@@ -1,0 +1,62 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/UseJQuery.css"/>
+<script type='text/javascript' src='lib/jquery-1.8.3.js'></script>
+<script type='text/javascript'>
+	$( document ).ready(function() {
+		
+		
+		$('#turn-blue').click(function(){
+			$('#target-turn-blue').css("background-color","blue");
+		});
+		$('#toggle-green').click(function(){
+			var $middle = $('.target-toggle-green');
+			if($middle.hasClass('toggle')){
+				$middle.removeClass('toggle');
+			}
+			else{
+				$middle.addClass('toggle');
+			}
+		});
+		
+		$('#change-to-orange').click(function(){
+			//$('.target-change-to-orange > table > tbody > tr > td').css('background-color', 'orange');
+			var $tds = $('.target-change-to-orange > table > tbody > tr > td');
+			if($tds.hasClass('now-orange')){
+				$tds.removeClass('now-orange');
+			}
+			else{
+				$tds.addClass('now-orange');
+			}
+		});
+		
+		$('.target-change-to-orange > table > tbody > tr > td').click(function(){
+			alert("ahh!");
+		});
+	});
+</script>
+</head>
+<body>
+	<div id='target-turn-blue'>When the 'Turn Blue' button is clicked, the background should change to blue.</div>
+	<button id="turn-blue">Turn Blue</button>
+	<div class='target-toggle-green'>When the 'Toggle Green' button is clicked, the background should toggle from white to green.</div>
+	<button id='toggle-green'>Toggle Green</button>
+	<div class='target-change-to-orange'>
+	<table>
+		<tbody>
+		<tr>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+		</tr>
+		<tr>
+			<td>One</td>
+			<td>Two</td>
+			<td>Three</td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+	<button id='change-to-orange'>Change to Orange</button>
+</body>
+</html>

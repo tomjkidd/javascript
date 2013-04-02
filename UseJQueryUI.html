@@ -1,0 +1,102 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/jquery-ui-themes/themes/base/jquery-ui.css" />
+
+<script type="text/javascript" src="lib/jquery.js"></script>
+<script type="text/javascript" src="lib/jquery-ui.js"></script>
+<script type="text/javascript" src="lib/knockout.js"></script>
+
+<style type="text/css">
+div, button, textarea {
+	font-family: "Segoe UI",Helvetica,Garuda,Arial,sans-serif;
+}
+html {
+	background-color: #1E1E1E;
+}
+button{
+	#border: 0px;
+	border-color: #742894;
+	background-color: #742894;
+	color: #FFFFFF
+}
+#license-agreement{
+	background-color: #1E1E1E;
+	color: #FFFFFF;
+}
+</style>
+<script>
+ $(document).ready(function(){
+	//Create a ViewModel to handle the license agreement
+	var viewModel = function(toolTipDiv){
+		var self = this;
+		self.LRE = ko.observable("Initial LRE");
+		self.ModalToolTip = ko.computed(function(){
+			toolTipDiv.attr("title", self.LRE());
+		});
+	}
+	var $modal = $("#open-modal");
+	var $dialog = $("#dialog");
+	var $lreupdate = $("#lre-update");
+	var $licenseagreement = $("#license-agreement");
+	
+	//Create the modal for entering a new license agreement
+	$dialog.dialog({
+		modal: true, 
+		autoOpen: false,
+		//Hide the titlebar close button
+		open: function(event, ui){
+			$(".ui-dialog-titlebar-close", ui.dialog).hide();
+		},
+		position: {my: "center top", at: "center top"},
+		width: 500,
+		height: 500
+		//,
+		//buttons: [
+			//{
+				//text:"TK BUTTON",
+				//click: function(event){
+					//event.target.innerHTML = "CLICKED!";
+				//}
+			//}
+		//]
+	});
+	
+	//Bind the UI to the ViewModel
+	var vm = new viewModel($modal);
+	ko.applyBindings(vm);
+	
+	//Add click handlers
+	$modal.click(function(){
+		$licenseagreement.val(vm.LRE());
+		$dialog.dialog("open");
+	});
+	
+	$lreupdate.click(function(){
+		vm.LRE($licenseagreement.val());
+		$dialog.dialog("close");
+	});
+	
+	$("#lre-cancel").click(function(){
+		$dialog.dialog("close");
+	});
+ });
+</script>
+</head>
+
+<body>
+
+<!--<label id="current-lre" data-bind="text: LRE"></label>-->
+<button id="open-modal">Update LRE</button>
+
+<div id="dialog" title="Dialog Title">
+<div>
+<textarea id="license-agreement" style='height: 90%; width: 100%; font-size: 16; font-family: "MS Sans Serif";'></textarea>
+</div>
+<div>
+<button id="lre-update" >Update</button>
+<button id="lre-cancel" >Cancel</button>
+</div>
+</div>
+
+</body>
+</html>

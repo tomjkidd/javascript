@@ -1,0 +1,119 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/UseKnockoutJS.css"/>
+<script type='text/javascript' src='lib/jquery-1.8.3.js'></script>
+<script type='text/javascript' src='lib/knockout-2.2.1.js'></script>
+
+<script type='text/javascript'>
+	$( document ).ready(function() {
+		//var calculatorViewModel = {
+		//	textBoundVariable: "I am not an observable. I can be used with a 'text' binding.",
+		//	numberOne: ko.observable(1),
+		//	numberTwo: ko.observable(2)
+		//}; //I couldn't use a computable with this object notation
+		
+		function calculatorViewModel(){
+			var self = this;
+			//this.textBoundVariable = "I am not an observable. I can be used with a 'text' binding."
+			self.numberOne = ko.observable(1);
+			self.numberTwo = ko.observable(2);
+			self.sum = ko.computed(function(){
+				return parseInt(self.numberOne(), 10) + parseInt(self.numberTwo(), 10);
+			});
+			self.difference = ko.computed(function(){
+				return parseInt(self.numberOne(), 10) - parseInt(self.numberTwo(), 10);
+			});
+			self.product = ko.computed(function(){
+				return parseInt(self.numberOne(), 10) * parseInt(self.numberTwo(), 10);
+			});
+			self.quotient = ko.computed(function(){
+				return parseInt(self.numberOne(), 10) / parseInt(self.numberTwo(), 10);
+			});
+			self.labelVisible = ko.observable(true);
+			self.inputVisible = ko.observable(true);
+			self.allVisible = ko.observable(true);
+			
+			self.toggleLabelVisible = function(){
+				self.labelVisible(!self.labelVisible());
+			}
+			
+			self.toggleInputVisible = function(){
+				$input = $(".input");
+				if(self.inputVisible()){ $input.hide();}
+				else{ $input.show(); }
+				self.inputVisible(!self.inputVisible());
+			}
+			
+			self.hideAll = function(){
+				var $all = $("div").not("#totaldisable, head, body, html");
+				if(self.allVisible()){
+					$all.hide();
+				}
+				else{
+					$all.show();
+				}
+				self.allVisible(!self.allVisible());
+			}
+
+			self.IsNegative = ko.computed(function(){
+				return parseInt(self.numberOne(), 10) < 0;
+			});
+			
+			self.RedWhenNegative = ko.computed(function(){
+				return parseInt(self.numberTwo(), 10) < 0 ? 'red':'blue';
+			});
+		}
+		
+		ko.applyBindings(new calculatorViewModel());
+		
+		//alert('Subscribing to numberOne');
+		//var subscription = calculatorViewModel.numberOne.subscribe(
+		//	function(newValue){
+		//		alert('numberOne is now '+newValue);
+		//	}
+		//);
+			//sum: ko.computable()
+		
+		
+		
+	});
+	
+</script>
+</head>
+
+<body>
+<div class="text-binding-use">
+<!-- <span data-bind="text: textBoundVariable">default</span> -->
+</div>
+
+<div class="input">
+<label data-bind="style: {color: IsNegative() ? 'red':'blue'}">Number one</label>
+<textarea id="number-one" rows="1" cols="4" data-bind="value: numberOne"></textarea> 
+<label data-bind="style: {color: RedWhenNegative()}">Number two</label>
+<textarea id="number-two" rows="1" cols="4" data-bind="value: numberTwo"></textarea>
+<!-- <button id='subscribe' data-bind="click: subscribe">Subscribe</button> -->
+<!-- <button id='unsubscribe' data-bind="click: unsubscribe"></button> -->
+</div>
+<div class="output">
+<label data-bind="css: {red: sum() < 0}">Sum</label>
+<label id='addition-result' data-bind="text: sum"></label>
+<label data-bind="css: {red: difference() < 0, green: !(difference() < 0)}">Difference</label>
+<label id='addition-result' data-bind="text: difference"></label>
+<label>Product</label>
+<label id='addition-result' data-bind="text: product"></label>
+<label>Quotient</label>
+<label id='addition-result' data-bind="text: quotient"></label>
+<label id='subscriber'></label>
+</div>
+
+<div id="visible-binding">
+<label data-bind="visible: labelVisible">This label should be visible when every other time the button is pressed</label>
+<button data-bind="click: toggleLabelVisible">Toggle</button>
+<button data-bind="click: toggleInputVisible">Toggle Input</button>
+</div>
+<div id="totaldisable">
+<button data-bind="click: hideAll">Toggle Hide All</button>
+</div>
+
+</body>
+</html>
