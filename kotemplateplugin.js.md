@@ -7,7 +7,7 @@ The benefits of using RequireJS to modularize javascript code provides incentive
 
 The main goals of this post are to describe how to achieve the following things:
 
-* Figure out how to load script tags with a plugin to load templates for knockout
+* Figure out how to dynamically load knockout templates with a RequireJS plugin
 
 ### Assumed Background
 
@@ -25,8 +25,8 @@ The following frameworks: [jQuery][jq] , [knockout][ko] , [RequireJS][require]
 ## Motivation
 
 I frequently use [knockout.js][ko] to create the user interface pieces for web development.
-One of the best things about knockout is the support for [Native Templating][koNativeTemplating],
-which easily allows View Models to be integrated with html elements.
+One of the most useful things about knockout is the support for [Native Templating][koNativeTemplating],
+which easily allow View Models to be integrated with html elements.
 
 Named templates can be added to a page, each one inside of it's own script tag. Following the examples on the knockout page, it is easy to create a named template and use it. This is fine if you only want to use the template on that page. Most of the time, though, the desire is to create a template and be able to use it anywhere.
 
@@ -117,7 +117,7 @@ This would work easily, and you wouldn't have to do anything special in the plug
 		}
 	});
 	
-By creating a templatePath config variable and using a default extension when none is provided (.html), I can configure a common location for all of my templates and then use a more consise form to load dependencies.
+By creating config variables for the template directory and file extension, I can configure a common location for all of my templates and then use a more consise form to load dependencies.
 	
 	require(['jquery', 'knockout', 'pn!Template1', 'pn!Template2', ..., 'pn!TemplateN'], function ($, ko){
 	});
@@ -150,4 +150,53 @@ This requires me to depend on 'module' in the plugin, and to provide the correct
 		return koTemplateLoader;
 	});
 
-This plugin is very optimistic, in that there is no error handling. It's also not extremely flexible, relying on a single configured template directory and appending the file extension directly. But this was intended to keep the size of code really small for the purpose of illustration. The basic ideas are working together here: our **load** function will create the url for the location to get our template text from based on our require dependencies. It will then register a callback to create the script tag once the template text is available. Finally, after our template has been inserted, **onload** is called to let require know that the resource has been loaded. 
+This plugin is very optimistic, in that there is no error handling. It's also not extremely flexible, relying on a single configured template directory and appending the file extension directly. But the intention was to keep the size of code really small to create a starting point. The basic ideas are working together here: our **load** function will create the url for the location to get our template text from based on our require dependencies. It will then register a callback to create the script tag once the template text is available. Finally, after our template has been inserted, **onload** is called to let require know that the resource has been loaded.
+
+### Creating A Simple CSS Loader Plugin
+As a bonus, we can also create a module to load css files using similar priciples. In this case, a link tag needs to be created with href, rel, and type attributes. RequireJS goes into some [detail](http://requirejs.org/docs/faq-advanced.html#css) about problems with this due to differences of browsers, but again for simple illustration, the following way works nicely.
+
+	define(['module'], function (module) {
+		'use strict';
+		var modconfig = (module.config && module.config()) || {};
+		var cssLoader = {
+			version: '0.0.1',
+			load: function (name, parentRequire, onload, config) {
+				var url = modconfig.cssPath + '/' + name + "." + modconfig.extension;
+				var s = document.createElement('link');
+				s.type = 'text/css';
+				s.rel = 'stylesheet';
+				s.href = url;
+				document.getElementsByTagName('head')[0].appendChild(s);
+				onload(null);
+			}
+		};
+		return cssLoader;
+	});
+
+Then to use these plugins together might look something like this:
+
+	require.config({
+		paths: {
+			'jquery': '../Scripts/lib/jquery',
+			'knockout': '../Scripts/lib/knockout',
+			'tld': '../Scripts/util/templateLoader',
+			'css': '../Scripts/util/scriptLoader'
+		},
+		config: {
+			'tld': {
+				templatePath: '../Scripts/templates',
+				extension: 'html'
+			},
+			'css': {
+				cssPath: '../Scripts/css',
+				extension: 'css'
+			}
+		}
+	});
+	
+	require(['jquery', 'knockout', 'tld!Template1', 'tld!Template2', ..., 'css!Template1Styles'], function ($, ko){
+	});
+	
+	
+### In Conclusion
+The goal of this post was meant to show how easy it is to create a custom RequireJS plugin to foster the reuse of knockout templates. Through the use of built in javascript objects, creating new dependencies that integrate with RequireJS is conceptually pretty simple. Building these types of tools can make your coding more enjoyable and maintainable.

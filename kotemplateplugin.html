@@ -16,10 +16,10 @@
           
           <h1>Follow the RequireJS Rabbit Hole</h1>
 <p>The benefits of using RequireJS to modularize javascript code provides incentive enough to use it. Being able to manage other resources that are needed for a page is just plain <a href="http://www.hulu.com/watch/19178">delicious</a>.</p>
-<h2>Goals</h2>
+<h2>Goal</h2>
 <p>The main goals of this post are to describe how to achieve the following things:</p>
 <ul>
-<li>Figure out how to load script tags with a plugin to load templates for knockout</li>
+<li>Figure out how to dynamically load knockout templates with a RequireJS plugin</li>
 </ul>
 <h3>Assumed Background</h3>
 <p>It is assumed that the reader is at least somewhat familiar with:</p>
@@ -27,8 +27,8 @@
 <p>The following frameworks: <a href="http://jquery.com/" title="jQuery home page">jQuery</a> , <a href="http://knockoutjs.com" title="Knockout home page">knockout</a> , <a href="http://requirejs.org/" title="RequireJS home page">RequireJS</a></p>
 <h2>Motivation</h2>
 <p>I frequently use <a href="http://knockoutjs.com" title="Knockout home page">knockout.js</a> to create the user interface pieces for web development.
-One of the best things about knockout is the support for <a href="http://knockoutjs.com/documentation/template-binding.html" title="Knockout template binding">Native Templating</a>,
-which easily allows View Models to be integrated with html elements.</p>
+One of the most useful things about knockout is the support for <a href="http://knockoutjs.com/documentation/template-binding.html" title="Knockout template binding">Native Templating</a>,
+which easily allow View Models to be integrated with html elements.</p>
 <p>Named templates can be added to a page, each one inside of it&#39;s own script tag. Following the examples on the knockout page, it is easy to create a named template and use it. This is fine if you only want to use the template on that page. Most of the time, though, the desire is to create a template and be able to use it anywhere.</p>
 <p>So to get started, this begs the question: how do I insert these script tags dynamically?</p>
 <h3>Dynamically Loading Script Tags</h3>
@@ -68,7 +68,7 @@ document.getElementsByTagName(<span class="string">'head'</span>)[<span class="n
 
         
           <div class='highlight'><pre>require.config({
-  paths: {
+	paths: {
 		<span class="string">'text'</span>: <span class="string">'../Scripts/lib/text'</span>
 	}
 });
@@ -124,7 +124,7 @@ oReq.send();</pre></div>
         
       
         
-        <p>By creating a templatePath config variable and using a default extension when none is provided (.html), I can configure a common location for all of my templates and then use a more consise form to load dependencies.</p>
+        <p>By creating config variables for the template directory and file extension, I can configure a common location for all of my templates and then use a more consise form to load dependencies.</p>
 
         
           <div class='highlight'><pre>require([<span class="string">'jquery'</span>, <span class="string">'knockout'</span>, <span class="string">'pn!Template1'</span>, <span class="string">'pn!Template2'</span>, ..., <span class="string">'pn!TemplateN'</span>], <span class="function"><span class="keyword">function</span> <span class="params">($, ko)</span>{</span>
@@ -163,7 +163,60 @@ oReq.send();</pre></div>
         
       
         
-        <p>This plugin is very optimistic, in that there is no error handling. It&#39;s also not extremely flexible, relying on a single configured template directory and appending the file extension directly. But this was intended to keep the size of code really small for the purpose of illustration. The basic ideas are working together here: our <strong>load</strong> function will create the url for the location to get our template text from based on our require dependencies. It will then register a callback to create the script tag once the template text is available. Finally, after our template has been inserted, <strong>onload</strong> is called to let require know that the resource has been loaded. </p>
+        <p>This plugin is very optimistic, in that there is no error handling. It&#39;s also not extremely flexible, relying on a single configured template directory and appending the file extension directly. But the intention was to keep the size of code really small to create a starting point. The basic ideas are working together here: our <strong>load</strong> function will create the url for the location to get our template text from based on our require dependencies. It will then register a callback to create the script tag once the template text is available. Finally, after our template has been inserted, <strong>onload</strong> is called to let require know that the resource has been loaded.</p>
+<h3>Creating A Simple CSS Loader Plugin</h3>
+<p>As a bonus, we can also create a module to load css files using similar priciples. In this case, a link tag needs to be created with href, rel, and type attributes. RequireJS goes into some <a href="http://requirejs.org/docs/faq-advanced.html#css">detail</a> about problems with this due to differences of browsers, but again for simple illustration, the following way works nicely.</p>
+
+        
+          <div class='highlight'><pre>define([<span class="string">'module'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(module)</span> {</span>
+	<span class="string">'use strict'</span>;
+	<span class="keyword">var</span> modconfig = (module.config &amp;&amp; module.config()) || {};
+	<span class="keyword">var</span> cssLoader = {
+		version: <span class="string">'0.0.1'</span>,
+		load: <span class="function"><span class="keyword">function</span> <span class="params">(name, parentRequire, onload, config)</span> {</span>
+			<span class="keyword">var</span> url = modconfig.cssPath + <span class="string">'/'</span> + name + <span class="string">"."</span> + modconfig.extension;
+			<span class="keyword">var</span> s = document.createElement(<span class="string">'link'</span>);
+			s.type = <span class="string">'text/css'</span>;
+			s.rel = <span class="string">'stylesheet'</span>;
+			s.href = url;
+			document.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(s);
+			onload(<span class="literal">null</span>);
+		}
+	};
+	<span class="keyword">return</span> cssLoader;
+});</pre></div>
+        
+      
+        
+        <p>Then to use these plugins together might look something like this:</p>
+
+        
+          <div class='highlight'><pre>require.config({
+	paths: {
+		<span class="string">'jquery'</span>: <span class="string">'../Scripts/lib/jquery'</span>,
+		<span class="string">'knockout'</span>: <span class="string">'../Scripts/lib/knockout'</span>,
+		<span class="string">'tld'</span>: <span class="string">'../Scripts/util/templateLoader'</span>,
+		<span class="string">'css'</span>: <span class="string">'../Scripts/util/scriptLoader'</span>
+	},
+	config: {
+		<span class="string">'tld'</span>: {
+			templatePath: <span class="string">'../Scripts/templates'</span>,
+			extension: <span class="string">'html'</span>
+		},
+		<span class="string">'css'</span>: {
+			cssPath: <span class="string">'../Scripts/css'</span>,
+			extension: <span class="string">'css'</span>
+		}
+	}
+});
+
+require([<span class="string">'jquery'</span>, <span class="string">'knockout'</span>, <span class="string">'tld!Template1'</span>, <span class="string">'tld!Template2'</span>, ..., <span class="string">'css!Template1Styles'</span>], <span class="function"><span class="keyword">function</span> <span class="params">($, ko)</span>{</span>
+});</pre></div>
+        
+      
+        
+        <h3>In Conclusion</h3>
+<p>The goal of this post was meant to show how easy it is to create a custom RequireJS plugin to foster the reuse of knockout templates. Through the use of built in javascript objects, creating new dependencies that integrate with RequireJS is conceptually pretty simple. Building these types of tools can make your coding more enjoyable and maintainable.</p>
 
         
       
