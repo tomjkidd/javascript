@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    var config = function(cx, cy) {
+        var self = this;
+        self.cx = cx;
+        self.cy = cy;
+    };
+    
+    var moveCircle = function (circle, config) {
+        circle.attr('cx', config.cx)
+            .attr('cy', config.cy)
+    };
+    
+    // First create the svg root
+    var svg = d3.select('body').append('svg')
+        .attr("width", 500)
+        .attr("height", 200);
+        
+    // Next add three circles, note that attr and style are chained
+    // to provide the location, size, and color of the circles.
+    var c1 = svg.append('circle')
+        .attr('cx', 0)
+        .attr('cy', 100)
+        .attr('r', 75)
+        .style('fill', 'red');
+    
+    var c2 = svg.append('circle')
+        .attr('cx', 50)
+        .attr('cy', 100)
+        .attr('r', 50)
+        .style('fill', 'green');
+        
+    var c3 = svg.append('circle')
+        .attr('cx', 100)
+        .attr('cy', 100)
+        .attr('r', 25)
+        .style('fill', 'blue');
+    
+    // Add three controls
+    var control1 = svg.append('text')
+        .attr('x', 220)
+        .attr('y', 20)
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '20px')
+        .style('fill','purple').text('Click to reset');
+        
+    var control2 = svg.append('text')
+        .attr('x', 220)
+        .attr('y', 40)
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '20px')
+        .style('fill','purple').text('Click for left-to-right');
+    
+    var control3 = svg.append('text')
+        .attr('x', 220)
+        .attr('y', 60)
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '20px')
+        .style('fill','purple').text('Click for top-to-bottom');
+    
+    control1.on('click', function(d, i) {
+        c1t = c1.transition().duration(500).ease('linear')
+        c2t = c2.transition().duration(250).ease('linear')
+        c3t = c3.transition().duration(100).ease('linear')
+        moveCircle(c1t, new config(100, 100));
+        moveCircle(c2t, new config(100, 100));
+        moveCircle(c3t, new config(100, 100));
+    });
+    
+    control2.on('click', function(d, i) {
+        c1t = c1.transition().duration(500).ease('linear')
+        c2t = c2.transition().duration(250).ease('linear')
+        c3t = c3.transition().duration(100).ease('linear')
+        moveCircle(c1t, new config(100, 100));
+        moveCircle(c2t, new config(125, 100));
+        moveCircle(c3t, new config(150, 100));
+    });
+    
+    control3.on('click', function(d, i) {
+        c1t = c1.transition().duration(500).ease('linear')
+        c2t = c2.transition().duration(250).ease('linear')
+        c3t = c3.transition().duration(100).ease('linear')
+        moveCircle(c1t, new config(100, 100));
+        moveCircle(c2t, new config(100, 125));
+        moveCircle(c3t, new config(100, 150));
+    });
+</script>
+</body>
+</html>

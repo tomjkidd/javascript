@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    
+    var svg = d3.select('body').append('svg')
+        .attr("width", 200)
+        .attr("height", 200);
+        
+    var c = svg.append('circle')
+        .attr('cx', 100)
+        .attr('cy', 100)
+        .attr('r', 75)
+        .style('fill', 'red');
+    
+    // The on function allows you to pay attention to DOM events.
+    // Here, we register a click handler on the circle to allow us
+    // to change its position when it is clicked.
+    c.on('click', function (d, i) {
+        var domEvent = d3.event;
+        // The '+' is a unary operator that will parse a string into a number
+        
+        // Get the current value
+        var cx = +c.attr('cx');
+        // Calculate the next value
+        var next_cx = cx + 100;
+        
+        // Update the value as a transition to animate the change
+        c.transition()
+            .duration(500)
+            .ease('linear')
+            .attr('cx', next_cx);
+    });
+</script>
+</body>
+</html>

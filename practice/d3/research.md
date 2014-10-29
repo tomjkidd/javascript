@@ -16,6 +16,10 @@ d3 Practice
 A fusion of web standards knowledge (SVG, css, DOM) can be brought to
 bear using d3. 
 
+The [Margin Convention][m-bostock-margin] can be used to keep svg work clean.
+
+The [Line Transition][m-bostock-ln-trans] gist was also useful for a starting point for
+a simple line chart.
 
 
 MDN SVG References
@@ -34,5 +38,7 @@ The [MDN Element Reference][mdn-elm] should help with usage of any of the tags.
 [m-bostock-block]: http://bl.ocks.org/mbostock
 [j-herr-home]: http://homes.cs.washington.edu/~jheer/
 [j-herr-dv]: http://courses.cs.washington.edu/courses/cse512/14wi/
+[m-bostock-margin]: http://bl.ocks.org/mbostock/3019563
+[m-bostock-ln-trans]: https://gist.github.com/mbostock/1642874
 [mdn-tut]: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial
 [mdn-elm]: https://developer.mozilla.org/en-US/docs/Web/SVG/Element
