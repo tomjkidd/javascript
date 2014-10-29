@@ -1,0 +1,38 @@
+d3
+==
+
+d3 People
+---------
+[Mike Bostock][m-bostock] is the author of d3, which he developed as a
+PhD student at Stanford. He works for The New York Times, and has tons
+of worked out samples showcasing d3 as [blocks][m-bostock-block].
+
+[Jeff Herr][j-herr-home] is a professor that teaches [Data Visualization][j-herr-dv] 
+at the University of Washington. His class page has a lot of valuable 
+links and information for learning more.
+
+d3 Practice
+-----------
+A fusion of web standards knowledge (SVG, css, DOM) can be brought to
+bear using d3. 
+
+
+
+MDN SVG References
+==================
+
+SVG tutorial
+------------
+The [MDN Tutorial][mdn-tut] is a good place to start, giving an overview
+of the necessary tags to get started.
+
+SVG Element Reference
+---------------------
+The [MDN Element Reference][mdn-elm] should help with usage of any of the tags.
+
+[m-bostock]: https://github.com/mbostock
+[m-bostock-block]: http://bl.ocks.org/mbostock
+[j-herr-home]: http://homes.cs.washington.edu/~jheer/
+[j-herr-dv]: http://courses.cs.washington.edu/courses/cse512/14wi/
+[mdn-tut]: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial
+[mdn-elm]: https://developer.mozilla.org/en-US/docs/Web/SVG/Element
