@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+    </style>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    var svg = d3.select('body').append('svg')
+        .attr('width', 500)
+        .attr('height', 500)
+
+    var data = [10,20,30,40,50];
+    
+    var anchor = svg.append('g').selectAll('circle').data(data);
+    
+    function createCircles(selection) {
+        selection.append('circle')
+            .style('fill','#ED7913')
+            .style('stroke','#1387ED')
+            .style('stroke-width', 2)
+            .attr('r', function(d,i){
+                return d;
+            })
+            .attr('cx', function (d,i){
+                return 100 * i;
+            })
+            .attr('cy', function (d,i){
+                return 100 * i;
+            })
+            .on('click',function(d,i){
+                d3.select(this).transition().attr('r',0).remove();
+            });
+    };
+    
+    /*
+     * Here the call function is used to pull selection operations
+     * together to make them reusable.
+     */ 
+    anchor.enter().call(createCircles);
+</script>
+</body>
+</html>

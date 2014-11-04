@@ -21,6 +21,9 @@ The [Margin Convention][m-bostock-margin] can be used to keep svg work clean.
 The [Line Transition][m-bostock-ln-trans] gist was also useful for a starting point for
 a simple line chart.
 
+Derek suggested this
+http://conal.net/pan/
+http://idl.cs.washington.edu/projects/lyra/
 
 MDN SVG References
 ==================
@@ -33,6 +36,9 @@ of the necessary tags to get started.
 SVG Element Reference
 ---------------------
 The [MDN Element Reference][mdn-elm] should help with usage of any of the tags.
+
+Jenkov.com tutorial was pretty concise for the 'g' element
+http://tutorials.jenkov.com/svg/g-element.html
 
 [m-bostock]: https://github.com/mbostock
 [m-bostock-block]: http://bl.ocks.org/mbostock

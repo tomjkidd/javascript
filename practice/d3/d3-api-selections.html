@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+    </style>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    /* 
+     * The most basic function of the selections api is select.
+     * Here it is used to grab the <body> element and add an <svg> element to it.
+     * Next, the attr function allows the programmer to update the attributes for the selection.
+     * In order to introduce new elements, append is used.
+     */
+    var svg = d3.select('body').append('svg')
+        .attr('width', 200)
+        .attr('height', 200)
+
+    // Two rectangles here are added under the svg element
+    var r1 = svg.append('rect');
+    var r2 = svg.append('rect');
+
+    // Here, the rectangles are all accessed together and have the same attr and styles applied
+    svg.selectAll('rect')
+        .attr('width', 100)
+        .attr('height', 100)
+        .style('fill', 'red');
+
+    // The classed function allows you to add or remove classes from selections
+    r1.classed('rect-1', true);
+    r2.classed('rect-2', true);
+
+    // The insert function allows you to insert an element before another matching element (takes the first match)
+    var r3 = svg.insert('rect', 'rect')
+        .attr('width', 50)
+        .attr('height', 50)
+        .attr('x', 100)
+        .attr('y', 100)
+        .style('fill', 'blue');
+
+    // The on method allows you to work with DOM and custom events. It is similar to the jquery on, as well.
+    svg.selectAll('rect').on('click', function (d, i) {
+        // this is the current element in this context.
+        // The remove function will remove the element from the DOM
+        this.remove();
+    });
+
+    var data = [100, 200, 300, 400];
+
+    // The data function creates an anchor for enter and exit functions. 
+    // Because data has 4 elements, a new rectangle will be inserted into the DOM so that there is one for each data element.
+    var anchor = svg.selectAll('rect').data(data);
+    anchor.enter().append('rect').attr('width', 50).attr('height', 50).style('fill', 'purple');
+
+    // The data array here only has a single element. c1 and c2 are created, and used in the selectAll call.
+    // Here, there is only one data element and two matching circle elements, so one of the elements is removed.
+    // The exit selection is used to create a transition that will reduce the radius of the circle to zero and remove it.
+    var data2 = [1];
+    var c1 = svg.append('circle').attr('r', 30).style('fill', 'orange');
+    var c2 = svg.append('circle').attr('r', 20).style('fill', 'yellow');
+
+    var anchor2 = svg.selectAll('circle').data(data2);
+    anchor2.exit().transition().attr('r', 0).remove();
+
+    var c3 = svg.append('circle').attr('r', 10).style('fill', 'yellow').classed('c3', true);
+    c3.datum({ x: 1, y: 2 });
+
+    // Here filter is used to access the rectangles where d > 200, and then giving them a black border
+    svg.selectAll('rect').filter(function (d, i) {
+        return d > 200;
+    }).style('stroke', 'black').style('stroke-width', 3);
+</script>
+</body>
+</html>
