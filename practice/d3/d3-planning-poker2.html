@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+    </style>
+</head>
+<body>
+<div>
+    <div data-bind="text: $data.Text"></div>
+    <input type="text" data-bind="value: $data.Input"/>
+    <button data-bind="click: $data.AddCard">Add Card</button>
+    <button data-bind="click: $data.AddAFew">Add A Few</button><br/>
+    <button data-bind="click: $data.Hide">Hide</button>
+    <button data-bind="click: $data.Show">Show</button>
+    <button data-bind="click: $data.Sort">Sort</button>
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+<script>
+    var svg = d3.select('body').append('svg')
+        .attr('width', 2500)
+        .attr('height', 2500)
+    
+    var card = {
+        width: 40,
+        height: 60,
+        gutter: 7,
+        round: 4,
+        offset: 3,
+        fill: '#ED7913',
+        stroke: '#1387ED',
+        fontfill: '#1387ED',
+        fontfamily: 'Helvetica',
+        fontsize: 16,
+        fontweight: 600,
+        sortduration: 750
+    };
+    
+    var data = [];
+    
+    function updateSvg(data) {
+        anchor = svg.selectAll('g').data(data);
+        
+        var entering = anchor.enter()
+            .append('g')
+            .attr('transform', function (d,i) {   
+                return 'translate(' + (card.width + card.gutter) * i + ',0)';
+            });
+        
+        entering.append('rect')
+            .style('fill', card.fill)
+            .style('stroke', card.stroke)
+            .style('stroke-width', 2)
+            .attr('width', card.width)
+            .attr('height', card.height)
+            .attr('x', card.offset)
+            .attr('y', card.offset)
+            .attr('ry', card.round)
+            .attr('rx', card.round)
+            
+        entering.append('text')
+            .attr('x', card.width/2 + card.offset/2)
+            .attr('y', card.height/2 + card.fontsize/2)
+            .attr('fill', card.fontfill)
+            .attr('font-family', card.fontfamily)
+            .attr('font-weight', card.fontweight)
+            .attr('font-size', card.fontsize)
+            .attr('text-anchor', 'middle')
+            .text(function(d){ return d==-1? '?':d; });
+    }
+    
+    function sortSvg() {
+        data = data.sort(function(a,b){return a - b})
+        console.log(data)
+        d3.selectAll('g').sort(d3.ascending)
+            .transition()
+            .delay(750)
+            .duration(card.sortduration)
+            .attr('transform', function (d,i){
+                return 'translate(' + (card.width + card.gutter) * i + ',0)';
+            });
+    }
+    
+    // Returns a random integer between min (included) and max (excluded)
+    // Using Math.round() will give you a non-uniform distribution!
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+        
+    var ViewModel = function() {
+        var self = this;
+        self.Text = 'Enter some numbers (no error checks...)';
+        self.Input = ko.observable();
+        self.AddCard = function () {
+            data.push(+self.Input.peek());
+            updateSvg(data);
+            console.log(data)
+        };
+        // TODO: Show and Hide may be involved...
+        //        http://stackoverflow.com/questions/26294715/css3-3d-flip-card-effect-with-svg-elements
+        self.Hide = function () {
+        
+        };
+        self.Show = function () {
+        
+        }
+        self.Sort = function () {
+            sortSvg()
+        };
+        self.AddAFew = function () {
+            var candidates = [1,2,3,5,8,13,21];
+            var toAdd = [];
+            for (var i = 0; i<6; i++) {
+                var a = candidates[getRandomInt(0, candidates.length)];
+                console.log(a);
+                toAdd.push(a);
+            }
+            data = data.concat(toAdd);
+            updateSvg(data);
+        };
+    }
+    ko.applyBindings(new ViewModel());
+</script>
+</body>
+</html>

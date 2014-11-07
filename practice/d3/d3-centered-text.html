@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+    </style>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+    var svg = d3.select('body').append('svg')
+        .attr('width', 2500)
+        .attr('height', 2500)
+    
+    var card = {
+        width: 80,
+        height: 120,
+        gutter: 7,
+        round: 4,
+        offset: 3,
+        fill: '#ED7913',
+        stroke: '#1387ED',
+        fontfill: '#1387ED',
+        fontfamily: 'Helvetica',
+        fontsize: 16,
+        fontweight: 600,
+        sortduration: 750
+    };
+    
+    var data = [5, 3, 100, 13, 2, 5, 1, 8];
+        
+    anchor = svg.selectAll('g').data(data);
+    
+    var entering = anchor.enter()
+        .append('g')
+        .attr('transform', function (d,i) {   
+            return 'translate(' + (card.width + card.gutter) * i + ',0)';
+        });
+    
+    entering.append('rect')
+        .style('fill', card.fill)
+        .style('stroke', card.stroke)
+        .style('stroke-width', 2)
+        .attr('width', card.width)
+        .attr('height', card.height)
+        .attr('x', card.offset)
+        .attr('y', card.offset)
+        .attr('ry', card.round)
+        .attr('rx', card.round)
+        
+    entering.append('text')
+        .attr('x', card.width/2 + card.offset/2)
+        .attr('y', card.height/2 + card.fontsize/2)
+        .attr('fill', card.fontfill)
+        .attr('font-family', card.fontfamily)
+        .attr('font-weight', card.fontweight)
+        .attr('font-size', card.fontsize)
+        .attr('text-anchor', 'middle')
+        .text(function(d){ return d; });
+    
+    d3.selectAll('g').sort(d3.ascending)
+        .transition()
+        .delay(0)
+        .duration(card.sortduration)
+        .attr('transform', function (d,i){
+            return 'translate(' + (card.width + card.gutter) * i + ',0)';
+        });
+</script>
+</body>
+</html>
