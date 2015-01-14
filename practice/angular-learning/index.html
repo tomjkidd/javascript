@@ -1,0 +1,59 @@
+<!doctype html>
+<html >
+<!-- angular.element($0).scope() -->
+<head>
+    <script src="lib/jquery-1.11.2.js"></script>
+    <script src="lib/angular.js"></script>
+    <script src="app/app.js"></script>
+</head>
+<body ng-app="learningApp">
+    <!-- The goal of this exploration is to approximate the knockout template binding that I am used to using -->
+    <!-- Here, <tk-template> is used, with template and viewmodel attributes -->
+    <!-- template takes the path the the html template that you want to use -->
+    <!-- viewmodel takse an object that you want to put in the scope of the template -->
+    <div ng-controller="DashboardCtrl as ctrl">
+        <div>
+            <h2>Palette</h2>
+            <ul ng-repeat="widget in paletteWidgets">
+                <li ng-click="moveWidgetFromPaletteToDashboard(widget)">
+                    {{ widget.name }}
+                    {{ widget.icon }}
+                    {{ widget.url }}
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h2>Dashboard</h2>
+            <ul ng-repeat="widget in dashboardWidgets">
+                <li>
+                    {{ widget.name }}
+                    {{ widget.icon }}
+                    {{ widget.url }}
+                </li>
+                <tk-template template="{{ widget.url }}" viewmodel="widget"></tk-template>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Below are some simple templates to work with -->
+    <!-- Note that each binds to a different part of the viewmodel -->
+    <script type="text/ng-template" id="widget1">
+        <div>
+            <h3>{{ viewmodel.name }}</h3>
+            <input type="text" ng-model="viewmodel.info">
+        </div>
+    </script>
+    <script type="text/ng-template" id="widget2">
+        <div>
+            <h3>Widget 2</h3>
+            <input type="text" ng-model="viewmodel.icon">
+        </div>
+    </script>
+    <script type="text/ng-template" id="widget3">
+        <div>
+            <h3>Widget 3</h3>
+            <input type="text" ng-model="viewmodel.url">
+        </div>
+    </script>
+</body>
+</html>

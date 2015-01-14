@@ -1,0 +1,13 @@
+Helpful links
+
+[Dynamic Outer Scope](http://stackoverflow.com/questions/21444111/angularjs-dynamically-attach-attribute-value-to-bound-object-how)
+
+[Dynamic template](http://stackoverflow.com/questions/21835471/angular-js-directive-dynamic-templateurl)
+
+[Dynamic template 2](http://onehungrymind.com/angularjs-dynamic-templates/)
+
+
+$compile(element.contents())(scope);
+
+[Related](http://codepen.io/m-e-conroy/pen/jCdhu)
+[Contrast to KO wrt Templating](http://blogs.lessthandot.com/index.php/webdev/uidevelopment/angularjs-vs-knockout-templating-5/)
