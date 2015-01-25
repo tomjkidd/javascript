@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--  ng-app is used to load the store module -->
+<html ng-app="store">
+<head>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/app.css" />
+  <title></title>
+</head>
+<!--  ng-controller is used to attach a controller to the body element for the store-->
+<body ng-controller="StoreController as store">
+  <ul class="list-group">
+    <li class="list-group-item" ng-repeat="product in store.products">
+      <product-title></product-title>
+
+      <!-- Image Gallery -->
+      <product-gallery></product-gallery>
+
+      <!-- Product Tabs -->
+      <product-tabs></product-tabs>
+    </li>
+  </ul>
+  <script type="text/javascript" src="lib/angular.js"></script>
+  <script type="text/javascript" src="app/level5-app.js"></script>
+  <script type="text/javascript" src="app/products.js"></script>
+</body>
+</html>

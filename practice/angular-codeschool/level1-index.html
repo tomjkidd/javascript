@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--  ng-app is used to load the store module -->
+<html ng-app="store">
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <title></title>
+    </head>
+    <!--  ng-controller is used to attach a controller to the body element for the store-->
+    <body ng-controller="StoreController as store">
+        <!--  ng-repeat is used to iterate through a list of items -->
+        <div ng-repeat="product in store.products">
+            <h1>{{ product.name }}</h1>
+            <h2>{{ product.price | currency }}</h2>
+            <p>{{ product.description }}</p>
+            <button ng-show="store.product.canPurchase"> Add to Cart </button>
+        </div>
+        <script type="text/javascript" src="lib/angular.js"></script>
+        <script type="text/javascript" src="app/level1-app.js"></script>
+    </body>
+</html>
