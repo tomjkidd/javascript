@@ -1,0 +1,53 @@
+{
+  "name": "electronic-life",
+  "version": "0.0.1",
+  "description": "Working through Eloquent Javascript",
+  "homepage": "",
+  "author": {
+    "name": "Tom Kidd",
+    "email": "tomjkidd@gmail.com",
+    "url": ""
+  },
+  "keywords": [
+  ],
+  "contributors": [
+  ],
+  "bugs": {
+    "url": ""
+  },
+  "license": {
+    "type": "MIT",
+    "url": "http://github.com/kriskowal/q/raw/master/LICENSE"
+  },
+  "main": "main.js",
+  "files": [
+
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "dependencies": {
+    "unique": "*",
+    "q": "*"
+  },
+  "devDependencies": {
+    "jshint": "~2.1.9",
+    "cover": "*",
+    "jasmine-node": "1.11.0",
+    "opener": "*",
+    "promises-aplus-tests": "1.x",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.9",
+    "grunt-contrib-uglify": "~0.2.2",
+    "matcha": "~0.2.0"
+  },
+  "scripts": {
+  },
+  "directories": {
+  },
+  "readme": "ERROR: No README data found!"
+}
