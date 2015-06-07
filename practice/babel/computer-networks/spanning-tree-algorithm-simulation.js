@@ -242,7 +242,7 @@ class Network {
   }
   getNodeList(edgelist) {
       var nodelist = [];
-    edgelist.forEach(([nodeA, _, nodeB, _]) => {
+    edgelist.forEach(([nodeA, portA, nodeB, portB]) => {
       if (nodelist.indexOf(nodeA) == -1) {
         nodelist.push(nodeA);
       }
