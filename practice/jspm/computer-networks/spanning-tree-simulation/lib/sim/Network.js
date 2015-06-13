@@ -20,7 +20,7 @@ class Network {
     this.edgeList.forEach(([src, nodeAPort, dst, nodeBPort]) => this.graph.edges.set(this.getEdgeKey(src,dst), new BridgeEdge(this.getNode(src), nodeAPort, this.getNode(dst), nodeBPort)));
 
     // Use edges to configure each node with it's connections
-    [...this.graph.nodes.values()].forEach(node => {
+    this.getNodes().forEach(node => {
       this.getEdgesForNode(node).forEach(edge => {
         node.addConnection(edge);
       });
