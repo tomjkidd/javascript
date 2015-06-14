@@ -1,7 +1,7 @@
 What is this ?
 --------------
 I created a [Spanning Tree simulation using Babel](https://github.com/tomjkidd/javascript/tree/master/practice/babel/computer-networks)
-a little while age and then ran into jspm when trying to figure out which type
+a little while ago and then ran into jspm when trying to figure out which type
 es5 deployment pattern to use.
 
 
