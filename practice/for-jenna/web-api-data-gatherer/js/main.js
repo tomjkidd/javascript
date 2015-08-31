@@ -1,5 +1,5 @@
 var main = {};
-(function(main) {
+(function(main, auth, api) {
 
     // Good ole' stack overflow:
     // http://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
@@ -17,16 +17,31 @@ var main = {};
     };
 
     main.clickHandler = function() {
-        download('data.txt', JSON.stringify(getResults()));
+        getResults().then(function(results){
+            console.log(results);
+            download('data.txt', JSON.stringify(results));
+        }).catch(function(){ console.log("unable to fetch"); });
     };
 
     function getResults() {
-        // TODO: Update this to do what is needed
-        var results = [];
-        results.push({ x: 1, y: 1, name: 'Point 1'});
-        results.push({ x: 2, y: 2, name: 'Point 2'});
-        results.push({ x: 3, y: 3, name: 'Point 3'});
-        return results;
+        var monitorUrlBase = api.baseUrl + "monitor/detail";
+        var params = {
+            auth: auth.authKey,
+            id: 1021
+        };
+        var monitorUrl = api.createGetUrl(monitorUrlBase, params);
+        console.log(monitorUrl);
+
+        var myHeaders = new Headers({
+            'Access-Control-Allow-Origin': '*'
+        });
+
+        var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+        return fetch(monitorUrl).then(api.getJsonFromResponse);
     };
 
-})(main);
+})(main, auth, api);
