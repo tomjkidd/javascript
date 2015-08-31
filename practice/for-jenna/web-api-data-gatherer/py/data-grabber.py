@@ -8,13 +8,17 @@ def get(url):
 
 def getMonitorDetail(auth, monitorId):
     monitorDetailBaseUrl = baseUrl + "monitor/detail"
-    monitorDetailUrl = "{0}?auth={1}&id={2}".format(monitorDetailBaseUrl, authKey, monitorId)
+    monitorDetailUrl = "{0}?auth={1}&id={2}".format(monitorDetailBaseUrl, auth, monitorId)
     return json.loads(get(monitorDetailUrl))
 
-if __name__ == '__main__':
-    authKey = "ProvideAuthKeyHere"
-    monitorId = "ProvideMonitorIdHere"
+def loadSettings():
+    with open('settings.tmp') as f:
+        settings = json.load(f)
+    return settings
 
-    monitorDetail = getMonitorDetail(authKey, monitorId)
+if __name__ == '__main__':
+    settings = loadSettings()
+
+    monitorDetail = getMonitorDetail(settings["auth"], settings["monitorId"])
 
     print monitorDetail["keywords"]
