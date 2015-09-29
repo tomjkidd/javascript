@@ -1,0 +1,51 @@
+/*------ Primary ------------*/
+.very-dark {
+    background-color: #550000;
+}
+
+.dark {
+    background-color: #801515;
+}
+
+.medium {
+    background-color: #AA3939;
+}
+
+.light {
+    background-color: #D46A6A;
+}
+
+.very-light {
+    background-color: #FFAAAA;
+}
+
+/*------ Secondary ---------*/
+.very-dark-comp {
+    background-color: #004400;
+}
+
+.dark-comp {
+    background-color: #116611;
+}
+
+.medium-comp {
+    background-color: #2D882D;
+}
+
+.light-comp {
+    background-color: #55AA55;
+}
+
+.very-light-comp {
+    background-color: #88CC88;
+}
+
+.swatch {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+body {
+    color: white;
+}

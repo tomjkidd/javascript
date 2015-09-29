@@ -1,0 +1,19 @@
+<html ng-app="tkApp">
+    <head>
+        <title>ui-router learning</title>
+        <link rel="stylesheet" type="text/css" href="css/theme1.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular-animate.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+    </head>
+    <body>
+        <a class="nav-button" ui-sref="reporting">Monitor and Respond</a>
+        <a class="nav-button" ui-sref="configuration">Configure</a>
+        <a class="nav-button" ui-sref="administration.report">Administer</a>
+
+        <!-- This is the Root ui-view, child will fill this hole -->
+        <div ui-view class="very-dark"></div>
+
+        <script src="app/app.js"></script>
+    </body>
+</html>
