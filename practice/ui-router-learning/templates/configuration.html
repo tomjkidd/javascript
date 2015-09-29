@@ -3,7 +3,17 @@
 
     <a class="nav-button" ui-sref="reporting.details">Reporting Details</a>
 
-    <a class="nav-button" ui-sref="configuration.details">Config Details</a>
+    <a class="nav-button" ui-sref="configuration.details({ type: 0, subtype: 0 })">Config Details</a>
+
+    <div>
+        Type: {{ type }}
+    </div>
+    <div>
+        Subtype: {{ subtype }}
+    </div>
+
+    <button type="button" ng-click="add1Type()">Add 1 to Type</button>
+
     <div ui-view>
 
     </div>

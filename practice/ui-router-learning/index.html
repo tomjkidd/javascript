@@ -8,7 +8,8 @@
     </head>
     <body>
         <a class="nav-button" ui-sref="reporting">Monitor and Respond</a>
-        <a class="nav-button" ui-sref="configuration">Configure</a>
+        <!-- Note: solved with SO: http://stackoverflow.com/questions/25647454/how-to-pass-parameters-using-ui-sref-in-ui-router-to-controller -->
+        <a class="nav-button" ui-sref="configuration.details({ type: 1, subtype: 2 })">Configure</a>
         <a class="nav-button" ui-sref="administration.report">Administer</a>
 
         <!-- This is the Root ui-view, child will fill this hole -->
